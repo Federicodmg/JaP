@@ -12,8 +12,8 @@ form.addEventListener("submit", e => {
 
 })
 
-function onSignIn(googleUser) {
-    let profile = googleUser.getBasicProfile();
+function onSignIn() {
+    window.location = "portada.html"
   }
 
 
