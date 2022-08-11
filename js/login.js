@@ -12,10 +12,10 @@ form.addEventListener("submit", e => {
 
 })
 
-function handleCredentialResponse(response) {
+/* function handleCredentialResponse(response) {
     window.location = "portada.html"
 }
-
+ */
 
 
 
