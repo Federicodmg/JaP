@@ -26,7 +26,7 @@ function renderButton() {
         "width": 240,
         "height": 50,
         "longtitle": true,
-        "theme": dark,
+        "theme": "dark",
         "onsuccess": onSuccess,
         "onfailure": onFailure,
     })
