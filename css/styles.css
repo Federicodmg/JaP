@@ -216,7 +216,7 @@ a.custom-card:hover {
   border-top-right-radius: 0;
 }
 
-.g-signin2 {
+#my-signin2 {
   display: flex;
   justify-content: center;
 }
