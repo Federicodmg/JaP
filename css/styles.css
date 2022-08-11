@@ -217,5 +217,6 @@ a.custom-card:hover {
 }
 
 .g-signin2 {
-  margin:auto
+  display: flex;
+  justify-content: center;
 }

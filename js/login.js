@@ -13,6 +13,7 @@ form.addEventListener("submit", e => {
 })
 
 function onSignIn() {
+    console.log("hola")
     window.location = "portada.html"
   }
 
