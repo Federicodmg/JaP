@@ -6,6 +6,10 @@
       name="viewport"
       content="width=device-width, initial-scale=1, shrink-to-fit=no"
     />
+    <meta
+      name="google-signin-client_id"
+      content="947656381337-75mjgmro0i1i8faan3v1on8f9a2slmf8.apps.googleusercontent.com"
+    />
     <title>eMercado - Todo lo que busques está aquí</title>
 
     <link
@@ -14,107 +18,47 @@
     />
     <link href="css/bootstrap.min.css" rel="stylesheet" />
     <link href="css/styles.css" rel="stylesheet" />
+    <style>
+      body {
+        background-color: rgb(248, 249, 250);
+      }
+    </style>
   </head>
 
   <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark p-1">
-      <div class="container">
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNav"
-          aria-controls="navbarNav"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav w-100 justify-content-between">
-            <li class="nav-item">
-              <a class="nav-link active" href="index.html">Inicio</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="categories.html">Categorías</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="sell.html">Vender</a>
-            </li>
-            <li class="nav-item"></li>
-          </ul>
+    <main class="mt-5 form-signin">
+      <img class="mb-4" src="./img/login.png" alt="" width="300" />
+      <h3 class="mb-3 text-center">Inicio de sesión</h3>
+      <form class="needs-validation" novalidate id="formulario">
+        <div class="text-center">
+          <label for="email" class="fw-light">Email</label>
+          <input
+            type="email"
+            class="form-control"
+            id="email"
+            placeholder="Email"
+            required
+          />
+          <div class="invalid-feedback">Ingresa tu e-mail</div>
         </div>
-      </div>
-    </nav>
-    <main>
-      <div class="jumbotron text-center"></div>
-      <div class="album py-5 bg-light">
-        <div class="container">
-          <div class="row">
-            <div class="col-md-4">
-              <div
-                class="card mb-4 shadow-sm custom-card cursor-active"
-                id="autos"
-              >
-                <img
-                  class="bd-placeholder-img card-img-top"
-                  src="img/cars_index.jpg"
-                  alt="Imgagen representativa de la categoría 'Autos'"
-                />
-                <h3 class="m-3">Autos</h3>
-                <div class="card-body">
-                  <p class="card-text">
-                    Los mejores precios en autos 0 kilómetro, de alta y media
-                    gama.
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div
-                class="card mb-4 shadow-sm custom-card cursor-active"
-                id="juguetes"
-              >
-                <img
-                  class="bd-placeholder-img card-img-top"
-                  src="img/toys_index.jpg"
-                  alt="Imgagen representativa de la categoría 'Juguetes'"
-                />
-                <h3 class="m-3">Juguetes</h3>
-                <div class="card-body">
-                  <p class="card-text">
-                    Encuentra aquí los mejores precios para niños/as de
-                    cualquier edad.
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div
-                class="card mb-4 shadow-sm custom-card cursor-active"
-                id="muebles"
-              >
-                <img
-                  class="bd-placeholder-img card-img-top"
-                  src="img/furniture_index.jpg"
-                  alt="Imgagen representativa de la categoría 'Muebles'"
-                />
-                <h3 class="m-3">Muebles</h3>
-                <div class="card-body">
-                  <p class="card-text">
-                    Muebles antiguos, nuevos y para ser armados por uno mismo.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <a class="btn btn-light btn-lg btn-block" href="categories.html"
-              >Y mucho más!</a
-            >
-          </div>
+        <div class="text-center">
+          <label for="contraseña" class="fw-light mt-2">Contraseña</label>
+          <input
+            type="password"
+            class="form-control"
+            id="contraseña"
+            placeholder="Contraseña"
+            required
+          />
+          <div class="invalid-feedback">Ingresa tu contraseña</div>
         </div>
-      </div>
+        <div class="text-center">
+          <button class="btn btn-lg btn-primary mt-4" type="submit">
+            Ingresar
+          </button>
+        </div>
+      </form>
+      <div class="g-signin2" data-onsuccess="onSignIn"></div>
     </main>
     <footer class="text-muted">
       <div class="container">
@@ -134,8 +78,8 @@
         </p>
       </div>
     </footer>
-    <script src="js/bootstrap.bundle.min.js"></script>
-    <script src="js/index.js"></script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
     <script src="js/init.js"></script>
+    <script src="js/login.js"></script>
   </body>
 </html>

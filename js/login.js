@@ -7,11 +7,14 @@ form.addEventListener("submit", e => {
     if (!form.checkValidity()) {
         e.stopPropagation()
     } else if (form.checkValidity()) {
-        localStorage.setItem("logged", true);
-        window.location = "index.html"
+        window.location = "portada.html"
     }
 
 })
+
+function onSignIn(googleUser) {
+    let profile = googleUser.getBasicProfile();
+  }
 
 
 
