@@ -12,10 +12,25 @@ form.addEventListener("submit", e => {
 
 })
 
-function onSignIn() {
-    console.log("hola")
+function onSuccess() {
     window.location = "portada.html"
-  }
+}
+
+function onFailure() {
+    console.log("Hubo un error con el log-in")
+}
+
+function renderButton() {
+    gapi.signin2.render("my-signin2", {
+        "scope": "profile email",
+        "width": 240,
+        "height": 50,
+        "longtitle": true,
+        "theme": dark,
+        "onsuccess": onSuccess,
+        "onfailure": onFailure,
+    })
+}
 
 
 
