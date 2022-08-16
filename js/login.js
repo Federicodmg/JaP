@@ -10,3 +10,7 @@ form.addEventListener("submit", (e) => {
     window.location = "portada.html";
   }
 });
+
+function handleCredentialResponse() {
+  window.location = "portada.html";
+}
