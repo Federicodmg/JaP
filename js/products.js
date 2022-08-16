@@ -1,11 +1,11 @@
 let currentCategoriesArray = [];
-let currentID = localStorage.getItem("catID")
+let currentID = localStorage.getItem("catID");
 
-function showCategoriesList(){
-    let htmlContentToAppend = "";
-    for(let i = 0; i < currentCategoriesArray.length; i++){
-        let category = currentCategoriesArray[i];
-            htmlContentToAppend += `
+function showCategoriesList() {
+  let htmlContentToAppend = "";
+  for (let i = 0; i < currentCategoriesArray.length; i++) {
+    let category = currentCategoriesArray[i];
+    htmlContentToAppend += `
             <div class="list-group-item list-group-item-action cursor-active">
                 <div class="row">
                     <div class="col-3">
@@ -20,17 +20,17 @@ function showCategoriesList(){
                     </div>
                 </div>
             </div>
-            `
-        }
-        document.getElementById("cat-list-container").innerHTML = htmlContentToAppend;
-    }
+            `;
+  }
+  document.getElementById("cat-list-container").innerHTML = htmlContentToAppend;
+}
 
-document.addEventListener("DOMContentLoaded", function(e){
-    getJSONData(`${PRODUCTS_URL}${currentID}.json`).then(function(resultObj){
-        if (resultObj.status === "ok"){
-            currentCategoriesArray = resultObj.data.products
-            showCategoriesList()
-            //sortAndShowCategories(ORDER_ASC_BY_NAME, resultObj.data);
-        }
-    });   
+document.addEventListener("DOMContentLoaded", function (e) {
+  getJSONData(`${PRODUCTS_URL}${currentID}.json`).then(function (resultObj) {
+    if (resultObj.status === "ok") {
+      currentCategoriesArray = resultObj.data.products;
+      showCategoriesList();
+      //sortAndShowCategories(ORDER_ASC_BY_NAME, resultObj.data);
+    }
+  });
 });
