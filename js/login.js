@@ -19,7 +19,8 @@ form.addEventListener("submit", (e) => {
   }
 });
 
-function handleCredentialResponse() {
+function handleCredentialResponse(response) {
+  console.log(response);
   localStorage.setItem("login", mail.value);
   window.location = "portada.html";
 }
