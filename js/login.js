@@ -20,7 +20,7 @@ form.addEventListener("submit", (e) => {
 });
 
 function handleCredentialResponse(response) {
-  let decodificado = atob(response.credential);
-  localStorage.setItem("JWT", decodificado);
+  const decoded = jwt_decode(response.credential);
+  localStorage.setItem("login", decoded.name);
   window.location = "portada.html";
 }
