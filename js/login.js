@@ -11,10 +11,10 @@ form.addEventListener("submit", (e) => {
     if (localStorage.getItem("login")) {
       localStorage.removeItem("login");
       localStorage.setItem("login", mail.value);
-      window.location = "portada.html";
+      /*       window.location = "portada.html"; */
     } else {
       localStorage.setItem("login", mail.value);
-      window.location = "portada.html";
+      /*       window.location = "portada.html"; */
     }
   }
 });
@@ -22,6 +22,6 @@ form.addEventListener("submit", (e) => {
 function handleCredentialResponse(response) {
   /*   let decodificado = response.credential.atob(); */
   console.log(response);
+  console.log(response.atob());
   /*   localStorage.setItem("login", decodificado.name); */
-  window.location = "portada.html";
 }
