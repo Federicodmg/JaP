@@ -21,6 +21,7 @@ form.addEventListener("submit", (e) => {
 
 function handleCredentialResponse(response) {
   let decodificado = response.atob();
-  localStorage.setItem("login", decodificado.name);
+  console.log(decodificado);
+  localStorage.setItem("login", "hola");
   window.location = "portada.html";
 }
