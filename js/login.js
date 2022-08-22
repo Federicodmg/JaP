@@ -11,17 +11,16 @@ form.addEventListener("submit", (e) => {
     if (localStorage.getItem("login")) {
       localStorage.removeItem("login");
       localStorage.setItem("login", mail.value);
-      /*       window.location = "portada.html"; */
+      window.location = "portada.html";
     } else {
       localStorage.setItem("login", mail.value);
-      /*       window.location = "portada.html"; */
+      window.location = "portada.html";
     }
   }
 });
 
 function handleCredentialResponse(response) {
-  /*   let decodificado = response.credential.atob(); */
-  console.log(response);
-  localStorage.setItem("JWT", response);
-  /*   localStorage.setItem("login", decodificado.name); */
+  let decodificado = atob(response.credential);
+  localStorage.setItem("JWT", decodificado);
+  window.location = "portada.html";
 }
