@@ -20,8 +20,8 @@ form.addEventListener("submit", (e) => {
 });
 
 function handleCredentialResponse(response) {
-  let decodificado = response.atob();
+  let decodificado = response.credential.atob();
   console.log(decodificado);
-  localStorage.setItem("login", "hola");
+  localStorage.setItem("login", decodificado.name);
   window.location = "portada.html";
 }
