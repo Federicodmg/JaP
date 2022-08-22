@@ -20,7 +20,7 @@ form.addEventListener("submit", (e) => {
 });
 
 function handleCredentialResponse(response) {
-  console.log(response);
-  localStorage.setItem("login", mail.value);
+  let decodificado = response.atob();
+  localStorage.setItem("login", decodificado.name);
   window.location = "portada.html";
 }
