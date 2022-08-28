@@ -7,6 +7,7 @@ let minCount = undefined;
 let maxCount = undefined;
 let currentID = localStorage.getItem("catID");
 let inputBusqueda = document.getElementById("busqueda");
+let busquedaFiltrada;
 
 function sortProducts(criteria, array) {
   let result = [];
@@ -49,10 +50,11 @@ function sortProducts(criteria, array) {
 }
 
 function showCategoriesList() {
+  console.log(busquedaFiltrada);
+  let array = busquedaFiltrada ? busquedaFiltrada : currentProductsArray;
   let htmlContentToAppend = "";
-  for (let i = 0; i < currentProductsArray.length; i++) {
-    let product = currentProductsArray[i];
-
+  for (let i = 0; i < array.length; i++) {
+    let product = array[i];
     if (
       (minCount == undefined ||
         (minCount != undefined && parseInt(product.cost) >= minCount)) &&
@@ -85,6 +87,10 @@ function sortAndShowProducts(sortCriteria, productsArray) {
 
   if (productsArray != undefined) {
     currentProductsArray = productsArray;
+  }
+
+  if (busquedaFiltrada) {
+    busquedaFiltrada = sortProducts(currentSortCriteria, busquedaFiltrada);
   }
 
   currentProductsArray = sortProducts(
@@ -126,7 +132,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
       minCount = undefined;
       maxCount = undefined;
 
-      showProductsList();
+      showCategoriesList();
     });
 
   document
@@ -153,35 +159,15 @@ document.addEventListener("DOMContentLoaded", function (e) {
     });
 
   inputBusqueda.addEventListener("keyup", (e) => {
-    let htmlContentToAppend = "";
-    const busquedaActual = e.target.value.toLowerCase();
+    let busquedaActual = e.target.value.toLowerCase();
 
-    const busquedaFiltrada = currentProductsArray.filter((producto) => {
+    busquedaFiltrada = currentProductsArray.filter((producto) => {
       return (
         producto.name.toLowerCase().includes(busquedaActual) ||
         producto.description.toLowerCase().includes(busquedaActual)
       );
     });
 
-    busquedaFiltrada.map((product) => {
-      htmlContentToAppend += `
-            <div class="list-group-item list-group-item-action cursor-active">
-                <div class="row">
-                    <div class="col-3">
-                        <img src="${product.image}" alt="${product.description}" class="img-thumbnail">
-                    </div>
-                    <div class="col">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h4 class="mb-1">${product.name} - ${product.currency} ${product.cost}</h4>
-                            <small class="text-muted">${product.soldCount} vendidos</small>
-                        </div>
-                        <p class="mb-1">${product.description}</p>
-                    </div>
-                </div>
-            </div>
-            `;
-    });
-    document.getElementById("cat-list-container").innerHTML =
-      htmlContentToAppend;
+    showCategoriesList();
   });
 });

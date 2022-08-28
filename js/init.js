@@ -9,6 +9,13 @@ const CART_INFO_URL = "https://japceibal.github.io/emercado-api/user_cart/";
 const CART_BUY_URL = "https://japceibal.github.io/emercado-api/cart/buy.json";
 const EXT_TYPE = ".json";
 const LOGINMAIL = localStorage.getItem("login");
+let loginP = document.getElementById("loginP");
+
+document.addEventListener("DOMContentLoaded", () => {
+  if (loginP) {
+    loginP.innerHTML = LOGINMAIL;
+  }
+});
 
 let showSpinner = function () {
   document.getElementById("spinner-wrapper").style.display = "block";
