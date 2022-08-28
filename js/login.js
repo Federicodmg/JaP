@@ -8,10 +8,8 @@ form.addEventListener("submit", (e) => {
   if (!form.checkValidity()) {
     e.stopPropagation();
   } else if (form.checkValidity()) {
-    if (localStorage.getItem("login")) {
-      localStorage.setItem("login", mail.value);
-      window.location = "portada.html";
-    }
+    localStorage.setItem("login", mail.value);
+    window.location = "portada.html";
   }
 });
 
