@@ -50,7 +50,6 @@ function sortProducts(criteria, array) {
 }
 
 function showCategoriesList() {
-  console.log(busquedaFiltrada);
   let array = busquedaFiltrada ? busquedaFiltrada : currentProductsArray;
   let htmlContentToAppend = "";
   for (let i = 0; i < array.length; i++) {
