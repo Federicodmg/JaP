@@ -224,3 +224,13 @@ a.custom-card:hover {
 .buscador {
   width: 100%;
 }
+
+.btn-secondary {
+  color: black;
+  background-color: white;
+  width: 10%;
+}
+
+.dropdown-toggle::after {
+  margin-left: 70px;
+}

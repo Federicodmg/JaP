@@ -49,6 +49,11 @@ function sortProducts(criteria, array) {
   return result;
 }
 
+function setCatID(id) {
+  localStorage.setItem("productID", id);
+  window.location = "product-info.html";
+}
+
 function showCategoriesList() {
   let array = busquedaFiltrada ? busquedaFiltrada : currentProductsArray;
   let htmlContentToAppend = "";
@@ -61,7 +66,7 @@ function showCategoriesList() {
         (maxCount != undefined && parseInt(product.cost) <= maxCount))
     ) {
       htmlContentToAppend += `
-            <div class="list-group-item list-group-item-action cursor-active">
+            <div onclick="setCatID(${product.id})" class="list-group-item list-group-item-action cursor-active">
                 <div class="row">
                     <div class="col-3">
                         <img src="${product.image}" alt="${product.description}" class="img-thumbnail">
@@ -157,7 +162,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
       showCategoriesList();
     });
 
-  inputBusqueda.addEventListener("keyup", (e) => {
+  inputBusqueda.addEventListener("input", (e) => {
     let busquedaActual = e.target.value.toLowerCase();
 
     busquedaFiltrada = currentProductsArray.filter((producto) => {
