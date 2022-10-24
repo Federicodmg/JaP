@@ -2,10 +2,7 @@
 <html lang="es">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <title>eMercado - Todo lo que busques está aquí</title>
     <link
       rel="stylesheet"
@@ -46,7 +43,30 @@
               <a class="nav-link" href="sell.html">Vender</a>
             </li>
             <li class="nav-item">
-              <span class="nav-link" id="loginP"></span>
+              <div class="dropdown">
+                <button
+                  class="btn btn-primary dropdown-toggle"
+                  type="button"
+                  id="dropdownMenuButton3"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  User
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton3">
+                  <li>
+                    <a class="dropdown-item" href="cart.html">Mi carrito</a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="my-profile.html">Mi perfil</a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" onclick="logout()" style="cursor: pointer"
+                      >Cerrar sesión</a
+                    >
+                  </li>
+                </ul>
+              </div>
             </li>
           </ul>
         </div>
@@ -66,17 +86,48 @@
         </p>
         <p>
           Este sitio forma parte de
-          <a href="https://jovenesaprogramar.edu.uy/" target="_blank"
-            >Jovenes a Programar</a
-          >
+          <a href="https://jovenesaprogramar.edu.uy/" target="_blank">Jovenes a Programar</a>
           - 2022
         </p>
         <p>
-          Clickea <a target="_blank" href="Letra.pdf">aquí</a> para descargar la
-          letra del obligatorio.
+          Clickea <a target="_blank" href="Letra.pdf">aquí</a> para descargar la letra del
+          obligatorio.
         </p>
       </div>
     </footer>
+
+    <div
+      class="alert alert-success alert-dismissible fade alert-product"
+      role="alert"
+      id="alert-success"
+      aria-hidden="true"
+    >
+      <p>El producto fue agregado al carrito de compras!</p>
+      <button
+        type="button"
+        class="btn-close"
+        aria-label="Close"
+        id="btn-success"
+        data-bs-dismiss="alert"
+      ></button>
+    </div>
+
+    <div
+      class="alert alert-danger alert-dismissible fade alert-product"
+      role="alert"
+      id="alert-danger"
+      aria-hidden="true"
+    >
+      <p>El producto ya existe en el carrito de compras</p>
+      <button
+        type="button"
+        class="btn-close"
+        aria-label="Close"
+        id="btn-danger"
+        data-bs-dismiss="alert"
+      ></button>
+    </div>
+
     <div id="spinner-wrapper">
       <div class="lds-ring">
         <div></div>

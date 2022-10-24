@@ -2,10 +2,7 @@
 <html lang="es">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <title>eMercado - Todo lo que busques está aquí</title>
 
     <link
@@ -43,7 +40,30 @@
               <a class="nav-link" href="sell.html">Vender</a>
             </li>
             <li class="nav-item">
-              <span class="nav-link" id="loginP"></span>
+              <div class="dropdown">
+                <button
+                  class="btn btn-primary dropdown-toggle"
+                  type="button"
+                  id="dropdownMenuButton3"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  User
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton3">
+                  <li>
+                    <a class="dropdown-item" href="cart.html">Mi carrito</a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="my-profile.html">Mi perfil</a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" onclick="logout()" style="cursor: pointer"
+                      >Cerrar sesión</a
+                    >
+                  </li>
+                </ul>
+              </div>
             </li>
           </ul>
         </div>
@@ -57,31 +77,12 @@
       <div class="container">
         <div class="row">
           <div class="col text-end">
-            <div
-              class="btn-group btn-group-toggle mb-4"
-              data-bs-toggle="buttons"
-            >
-              <input
-                type="radio"
-                class="btn-check"
-                name="options"
-                id="sortAsc"
-              />
+            <div class="btn-group btn-group-toggle mb-4" data-bs-toggle="buttons">
+              <input type="radio" class="btn-check" name="options" id="sortAsc" />
               <label class="btn btn-light" for="sortAsc">A-Z</label>
-              <input
-                type="radio"
-                class="btn-check"
-                name="options"
-                id="sortDesc"
-              />
+              <input type="radio" class="btn-check" name="options" id="sortDesc" />
               <label class="btn btn-light" for="sortDesc">Z-A</label>
-              <input
-                type="radio"
-                class="btn-check"
-                name="options"
-                id="sortByCount"
-                checked
-              />
+              <input type="radio" class="btn-check" name="options" id="sortByCount" checked />
               <label class="btn btn-light" for="sortByCount"
                 ><i class="fas fa-sort-amount-down mr-1"></i
               ></label>
@@ -112,12 +113,8 @@
               </div>
               <div class="col-3 p-0">
                 <div class="btn-group" role="group">
-                  <button class="btn btn-light btn-block" id="rangeFilterCount">
-                    Filtrar
-                  </button>
-                  <button class="btn btn-link btn-sm" id="clearRangeFilter">
-                    Limpiar
-                  </button>
+                  <button class="btn btn-light btn-block" id="rangeFilterCount">Filtrar</button>
+                  <button class="btn btn-link btn-sm" id="clearRangeFilter">Limpiar</button>
                 </div>
               </div>
             </div>
@@ -135,14 +132,12 @@
         </p>
         <p>
           Este sitio forma parte de
-          <a href="https://jovenesaprogramar.edu.uy/" target="_blank"
-            >Jovenes a Programar</a
-          >
+          <a href="https://jovenesaprogramar.edu.uy/" target="_blank">Jovenes a Programar</a>
           - 2022
         </p>
         <p>
-          Clickea <a target="_blank" href="Letra.pdf">aquí</a> para descargar la
-          letra del obligatorio.
+          Clickea <a target="_blank" href="Letra.pdf">aquí</a> para descargar la letra del
+          obligatorio.
         </p>
       </div>
     </footer>

@@ -9,13 +9,20 @@ const CART_INFO_URL = "https://japceibal.github.io/emercado-api/user_cart/";
 const CART_BUY_URL = "https://japceibal.github.io/emercado-api/cart/buy.json";
 const EXT_TYPE = ".json";
 const LOGINMAIL = localStorage.getItem("login");
-let loginP = document.getElementById("loginP");
+let loginButton = document.getElementById("dropdownMenuButton3");
 
 document.addEventListener("DOMContentLoaded", () => {
-  if (loginP) {
-    loginP.innerHTML = LOGINMAIL;
+  if (LOGINMAIL) {
+    loginButton.innerHTML = LOGINMAIL;
+  } else {
+    loginButton.innerHTML = "Invitado";
   }
 });
+
+function logout() {
+  localStorage.removeItem("login");
+  window.location = "index.html";
+}
 
 let showSpinner = function () {
   document.getElementById("spinner-wrapper").style.display = "block";

@@ -97,9 +97,8 @@ footer p {
 
 .alert {
   position: fixed;
-  top: 80px;
-  width: 50%;
-  left: 50%;
+  top: 55px;
+  left: 54%;
   transform: translate(-50%, 0);
 }
 
@@ -234,3 +233,70 @@ a.custom-card:hover {
 .dropdown-toggle::after {
   margin-left: 70px;
 }
+
+.btn-primary {
+  background-color: #212529;
+  border: none;
+}
+
+.btn-primary:hover {
+  background-color: #212529;
+  border: none;
+}
+
+.btn-primary:focus {
+  background-color: #212529;
+  border: none;
+}
+
+.carousel {
+  max-width: 80%;
+}
+
+.carousel-control-next,
+.carousel-control-prev {
+  opacity: 1;
+}
+
+.img-table {
+  width: 80%;
+  height: auto
+}
+
+/* .td-width {
+  width: 20%;
+} */
+
+.input-cart {
+  width: 40%;
+}
+
+.align-items {
+  text-align: center;
+  vertical-align: middle;
+}
+
+.img-td {
+  width: 10%;
+}
+
+.info-td {
+  width: 20%;
+}
+
+.btn-td {
+  width: 10%;
+}
+
+.header-prod-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0;
+  padding: 0;
+}
+
+.input-article {
+  width: 40%;
+}
+
