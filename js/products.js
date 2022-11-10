@@ -54,16 +54,16 @@ function setCatID(id) {
   window.location = "product-info.html";
 }
 
-function showCategoriesList() {
+function showProductsList() {
   let array = busquedaFiltrada ? busquedaFiltrada : currentProductsArray;
   let htmlContentToAppend = "";
   for (let i = 0; i < array.length; i++) {
     let product = array[i];
     if (
       (minCount == undefined ||
-        (minCount != undefined && parseInt(product.cost) >= minCount)) &&
+        (minCount != undefined && parseInt(product.soldCount) >= minCount)) &&
       (maxCount == undefined ||
-        (maxCount != undefined && parseInt(product.cost) <= maxCount))
+        (maxCount != undefined && parseInt(product.soldCount) <= maxCount))
     ) {
       htmlContentToAppend += `
             <div onclick="setCatID(${product.id})" class="list-group-item list-group-item-action cursor-active">
@@ -103,14 +103,14 @@ function sortAndShowProducts(sortCriteria, productsArray) {
   );
 
   //Muestro las categorías ordenadas
-  showCategoriesList();
+  showProductsList();
 }
 
 document.addEventListener("DOMContentLoaded", function (e) {
   getJSONData(`${PRODUCTS_URL}${currentID}.json`).then(function (resultObj) {
     if (resultObj.status === "ok") {
       currentProductsArray = resultObj.data.products;
-      showCategoriesList();
+      showProductsList();
       //sortAndShowProducts(ORDER_ASC_BY_PRICE, resultObj.data);
     }
   });
@@ -136,7 +136,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
       minCount = undefined;
       maxCount = undefined;
 
-      showCategoriesList();
+      showProductsList();
     });
 
   document
@@ -159,7 +159,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
         maxCount = undefined;
       }
 
-      showCategoriesList();
+      showProductsList();
     });
 
   inputBusqueda.addEventListener("input", (e) => {
@@ -172,6 +172,6 @@ document.addEventListener("DOMContentLoaded", function (e) {
       );
     });
 
-    showCategoriesList();
+    showProductsList();
   });
 });

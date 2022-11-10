@@ -45,7 +45,7 @@
         <div class="collapse navbar-collapse" id="navbarNav">
           <ul class="navbar-nav w-100 justify-content-between">
             <li class="nav-item">
-              <a class="nav-link" href="index.html">Inicio</a>
+              <a class="nav-link" href="portada.html">Inicio</a>
             </li>
             <li class="nav-item">
               <a class="nav-link active" href="categories.html">Categorías</a>
@@ -85,8 +85,48 @@
     </nav>
     <main>
       <div class="container">
-        <div class="alert alert-danger text-center" role="alert">
-          <h4 class="alert-heading">Funcionalidad en desarrollo</h4>
+        <div class="d-flex justify-content-between align-items-center mt-3 mb-3">
+          <div>
+            <h3>Perfil</h3>
+          </div>
+          <div>
+            <img src="./img/img_perfil.png" alt="Una imágen de perfil por defecto" height="100px" id="profile-img">
+          </div>
+        </div>
+        <hr>
+        <form class="row needs-validation" novalidate id="form">
+            <div class="col-6 mb-3">
+                <label for="first-name" class="form-label">Primer nombre*</label>
+                <input type="text" class="form-control" id="first-name" required>
+            </div>
+            <div class="col-6 mb-3">
+                <label for="second-name" class="form-label">Segundo nombre</label>
+                <input type="text" class="form-control" id="second-name">
+            </div>
+            <div class="col-6 mb-3">
+                <label for="first-surname" class="form-label">Primer apellido*</label>
+                <input type="text" class="form-control" id="first-surname" required>
+            </div>
+            <div class="col-6 mb-3">
+                <label for="second-surname" class="form-label">Segundo apellido</label>
+                <input type="text" class="form-control" id="second-surname">
+            </div>
+            <div class="col-6 mb-3">
+                <label for="email" class="form-label">E-mail*</label>
+                <input type="text" class="form-control" id="email" required>
+            </div>
+            <div class="col-6 mb-3">
+                <label for="profile-picture" class="form-label">Imágen de perfil</label>
+                <input type="file" class="form-control" accept="image/*" id="image">
+            </div>
+            <div class="col-6 mb-1">
+                <label for="contact-phone" class="form-label">Teléfono de contacto*</label>
+                <input type="number" class="form-control" id="contact-phone">
+            </div>
+        </form>
+        <hr>
+        <div class="col-6">
+          <button type="submit" class="btn btn-primary mt-1" form="form">Guardar cambios</button>
         </div>
       </div>
     </main>

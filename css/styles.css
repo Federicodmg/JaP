@@ -222,6 +222,7 @@ a.custom-card:hover {
 
 .buscador {
   width: 100%;
+  height: 95%;
 }
 
 .btn-secondary {
@@ -234,19 +235,20 @@ a.custom-card:hover {
   margin-left: 70px;
 }
 
-.btn-primary {
+button.dropdown-toggle.btn-primary {
   background-color: #212529;
   border: none;
 }
 
-.btn-primary:hover {
+button.dropdown-toggle.btn-primary:hover {
   background-color: #212529;
   border: none;
 }
 
-.btn-primary:focus {
+button.dropdown-toggle.btn-primary:focus {
   background-color: #212529;
   border: none;
+  box-shadow: none;
 }
 
 .carousel {
@@ -300,3 +302,120 @@ a.custom-card:hover {
   width: 40%;
 }
 
+.block {
+  display: block;
+}
+
+.h-100 {
+  height: 100%;
+}
+
+.list-group {
+  padding: 0;
+}
+
+.custom-card {
+  height: 230px;
+  border: 1px solid rgba(61, 61, 61, 0.068);
+  border-radius: 5px;
+}
+
+img {
+  max-width: 100%;
+}
+
+.img-div {
+  margin-block: auto;
+}
+
+.filter-input {
+  width: 60%;
+  margin-bottom: .4em;
+}
+
+.cat-container {
+  justify-content: center;
+  column-gap: 1.25em;
+}
+
+.filters {
+  padding-block: 10px;
+  border: 1px solid rgba(61, 61, 61, 0.068);
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 230px;
+}
+
+.nav-bar {
+  gap: 20%;
+  justify-content: center;
+}
+
+.boxt {
+  padding: 0;
+  margin-inline: .5em;
+}
+
+.col-6 {
+  width: 45%;
+}
+
+select {
+  width: 100%;
+}
+
+@media (max-width: 1250px) {
+  .filters {
+    display: none;
+  }
+
+  .cat-container {
+    width: 100%;
+  }
+
+  .container-row {
+    justify-content: center;
+  }
+
+  .sm-filter-div {
+    max-width: 1041px;
+    margin-inline: auto;
+  }
+
+  .sm-filters {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .filter-input {
+    width: 10%;
+  }
+
+  select {
+    width: 30%;
+  }
+
+  .filter-input {
+    padding: .375em 0.75em;
+    border-radius: 0.25em;
+    border: 1px solid rgba(61, 61, 61, 0.89);
+  }
+
+  select {
+    padding: .375em 0.75em;
+    border-radius: 0.25em;
+    border: 1px solid rgba(61, 61, 61, 0.89);
+  }
+
+  .btn {
+    vertical-align:baseline
+  }
+}
+
+@media (min-width: 1250px) {
+  .sm-filter-div {
+    display: none;
+  }
+}

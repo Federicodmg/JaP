@@ -29,9 +29,9 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav w-100 justify-content-between">
+          <ul class="navbar-nav w-100 nav-bar">
             <li class="nav-item">
-              <a class="nav-link" href="index.html">Inicio</a>
+              <a class="nav-link" href="portada.html">Inicio</a>
             </li>
             <li class="nav-item">
               <a class="nav-link active" href="categories.html">Categorías</a>
@@ -74,54 +74,68 @@
         <h2>Categorías</h2>
         <p class="lead">Verás aquí todas las categorías del sitio.</p>
       </div>
-      <div class="container">
-        <div class="row">
-          <div class="col text-end">
-            <div class="btn-group btn-group-toggle mb-4" data-bs-toggle="buttons">
-              <input type="radio" class="btn-check" name="options" id="sortAsc" />
-              <label class="btn btn-light" for="sortAsc">A-Z</label>
-              <input type="radio" class="btn-check" name="options" id="sortDesc" />
-              <label class="btn btn-light" for="sortDesc">Z-A</label>
-              <input type="radio" class="btn-check" name="options" id="sortByCount" checked />
-              <label class="btn btn-light" for="sortByCount"
-                ><i class="fas fa-sort-amount-down mr-1"></i
-              ></label>
-            </div>
-          </div>
+      <div class="sm-filter-div">
+        <div class="sm-filters">
+          <span>
+            <span class="font-weight-normal text-end my-2 me-2">Cantidad:</span>
+            <input
+              class="filter-input me-2"
+              type="number"
+              placeholder="min."
+              id="rangeFilterCountMin"
+            />
+            <input
+              class="filter-input me-2"
+              type="number"
+              placeholder="máx."
+              id="rangeFilterCountMax"
+            />
+            <button class="btn btn-primary" id="rangeFilterCount">Filtrar</button>
+            <button class="btn btn-primary" id="clearRangeFilter">Limpiar</button>
+          </span>
+          <span class="text-end">
+            <label for="pet-select">Ordenar desde:</label>
+            <select name="pets" id="pet-select" onchange="selectFilter(event)">
+              <option value="AZ">A-Z</option>
+              <option value="ZA">Z-A</option>
+              <option value="Cant.">Más a menos artículos</option>
+            </select>
+          </span>
         </div>
-        <div class="row">
-          <div class="col-lg-6 offset-lg-6 col-md-12 mb-1 container">
-            <div class="row container p-0 m-0">
-              <div class="col">
-                <p class="font-weight-normal text-end my-2">Cant.</p>
-              </div>
-              <div class="col">
+      </div>
+        <div class="container">
+          <div class="row container-row">
+            <div class="col-2 filters shadow">
+              <div>
+                <span class="font-weight-normal text-end my-2 me-2">Cantidad:</span>
                 <input
-                  class="form-control"
+                  class="filter-input me-2"
                   type="number"
                   placeholder="min."
                   id="rangeFilterCountMin"
                 />
-              </div>
-              <div class="col">
                 <input
-                  class="form-control"
+                  class="filter-input me-2"
                   type="number"
                   placeholder="máx."
                   id="rangeFilterCountMax"
                 />
               </div>
-              <div class="col-3 p-0">
-                <div class="btn-group" role="group">
-                  <button class="btn btn-light btn-block" id="rangeFilterCount">Filtrar</button>
-                  <button class="btn btn-link btn-sm" id="clearRangeFilter">Limpiar</button>
-                </div>
+              <div>
+                <button class="btn btn-primary" id="rangeFilterCount">Filtrar</button>
+                <button class="btn btn-primary" id="clearRangeFilter">Limpiar</button>
+              </div>
+              <div>
+                <label for="pet-select">Ordenar desde:</label>
+                <select name="pets" id="pet-select" class="w-100" onchange="selectFilter(event)">
+                  <option value="AZ">A-Z</option>
+                  <option value="ZA">Z-A</option>
+                  <option value="Cant.">Más a menos artículos</option>
+                </select>
               </div>
             </div>
+            <div class="col-10 row cat-container" id="cat-list-container"></div>
           </div>
-        </div>
-        <div class="row">
-          <div class="list-group" id="cat-list-container"></div>
         </div>
       </div>
     </main>
@@ -154,3 +168,40 @@
     <script src="js/categories.js"></script>
   </body>
 </html>
+
+
+<!-- <div class="row">
+  <div class="col-lg-12 col-md-12 mb-1 container">
+    <div class="row container p-0 m-0">
+      <div class="col-1">
+        <p class="font-weight-normal text-end my-2">Cant.</p>
+      </div>
+      <div class="col-1">
+        <input
+          type="number"
+          placeholder="min."
+          id="rangeFilterCountMin"
+        />
+      </div>
+      <div class="col-1">
+        <input
+          type="number"
+          placeholder="máx."
+          id="rangeFilterCountMax"
+        />
+      </div>
+      <div class="col-2 p-0">
+        <button class="btn-primary" id="rangeFilterCount">Filtrar</button>
+        <button class="btn-primary" id="clearRangeFilter">Limpiar</button>
+      </div>
+      <div class="col-4">
+        <label for="pet-select">Ordenar desde:</label>
+        <select name="pets" id="pet-select" onchange="selectFilter(event)">
+          <option value="AZ">A-Z</option>
+          <option value="ZA">Z-A</option>
+          <option value="Cant.">Más a menos artículos</option>
+        </select>
+      </div>
+    </div>
+  </div>
+</div> -->

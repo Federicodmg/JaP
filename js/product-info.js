@@ -2,7 +2,7 @@ let productID = +localStorage.getItem("productID");
 let commentArray = JSON.parse(localStorage.getItem("comentarios"));
 let currentInfoArray;
 let currentCommentArray = [];
-let cartArray = localStorage.getItem("cartArray");
+let cartObj = localStorage.getItem("cartObj");
 let success = document.getElementById("alert-success");
 let danger = document.getElementById("alert-danger");
 
@@ -155,13 +155,13 @@ function createImages() {
   //Comienza el loop desde 1 para no repetir imágenes y loopea -1 para no pasarse de cantidad
 }
 
+
 function purchaseItem() {
-  let currentCartArray = [];
+  let currentCartObj = {};
   //Creamos un array vacío
 
   if (
-    cartArray && cartArray.includes(currentInfoArray.id) ||
-    productID === 50924
+    cartObj && cartObj.includes(currentInfoArray.id)
   ) {
     danger.classList.add("show");
     return;
@@ -169,13 +169,12 @@ function purchaseItem() {
   //Si el array incluye la ID de lo que intentamos agregar
   // o es 50924 (la default de la request) no se agrega
 
-  if (cartArray) {
-    currentCartArray = JSON.parse(cartArray);
+  if (cartObj) {
+    currentCartObj = JSON.parse(cartObj);
   }
   //Si hay un carrito lo traemos
 
   let producto = {
-    id: currentInfoArray.id,
     name: currentInfoArray.name,
     count: +1,
     unitCost: currentInfoArray.cost,
@@ -184,8 +183,8 @@ function purchaseItem() {
   };
   //Creamos el producto con los datos
 
-  currentCartArray.push(producto);
-  localStorage.setItem("cartArray", JSON.stringify(currentCartArray));
+  currentCartObj[currentInfoArray.id] = producto;
+  localStorage.setItem("cartObj", JSON.stringify(currentCartObj));
   success.classList.add("show");
   //Pusheamos el producto al array, lo guardamos en localStorage y sale una alerta
 }

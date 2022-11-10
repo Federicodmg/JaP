@@ -1,7 +1,6 @@
 let loginP = document.getElementById("loginP");
 
 document.addEventListener("DOMContentLoaded", function () {
-  loginP.innerHTML = LOGINMAIL;
   document.getElementById("autos").addEventListener("click", function () {
     localStorage.setItem("catID", 101);
     window.location = "products.html";

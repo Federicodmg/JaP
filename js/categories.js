@@ -8,7 +8,7 @@ let maxCount = undefined;
 
 function sortCategories(criteria, array) {
   let result = [];
-  if (criteria === ORDER_ASC_BY_PRICE) {
+  if (criteria === ORDER_ASC_BY_NAME) {
     result = array.sort(function (a, b) {
       if (a.name < b.name) {
         return -1;
@@ -18,7 +18,7 @@ function sortCategories(criteria, array) {
       }
       return 0;
     });
-  } else if (criteria === ORDER_DESC_BY_PRICE) {
+  } else if (criteria === ORDER_DESC_BY_NAME) {
     result = array.sort(function (a, b) {
       if (a.name > b.name) {
         return -1;
@@ -64,19 +64,16 @@ function showCategoriesList() {
         (maxCount != undefined && parseInt(category.productCount) <= maxCount))
     ) {
       htmlContentToAppend += `
-            <div onclick="setCatID(${category.id})" class="list-group-item list-group-item-action cursor-active">
-                <div class="row">
-                    <div class="col-3">
-                        <img src="${category.imgSrc}" alt="${category.description}" class="img-thumbnail">
-                    </div>
-                    <div class="col">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h4 class="mb-1">${category.name}</h4>
-                            <small class="text-muted">${category.productCount} artículos</small>
-                        </div>
-                        <p class="mb-1">${category.description}</p>
-                    </div>
-                </div>
+            <div onclick="setCatID(${category.id})" class="row cursor-active col-6 boxt mb-3 shadow custom-card">
+              <div class="col-5 img-div">
+                  <img src="${category.imgSrc}" alt="${category.description}" class="card-img">
+              </div>
+              <div class="col-7 img-div">
+                  <h4 class="mb-1 mt-2">${category.name}</h4>
+                  <hr>
+                  <p>${category.description}</p>
+                  <p>${category.productCount} artículos disponibles</p>
+              </div>
             </div>
             `;
     }
@@ -102,6 +99,10 @@ function sortAndShowCategories(sortCriteria, categoriesArray) {
   showCategoriesList();
 }
 
+function selectFilter(e) {
+  sortAndShowCategories(e.target.value);
+}
+
 //Función que se ejecuta una vez que se haya lanzado el evento de
 //que el documento se encuentra cargado, es decir, se encuentran todos los
 //elementos HTML presentes.
@@ -112,18 +113,6 @@ document.addEventListener("DOMContentLoaded", function (e) {
       showCategoriesList();
       //sortAndShowCategories(ORDER_ASC_BY_NAME, resultObj.data);
     }
-  });
-
-  document.getElementById("sortAsc").addEventListener("click", function () {
-    sortAndShowCategories(ORDER_ASC_BY_NAME);
-  });
-
-  document.getElementById("sortDesc").addEventListener("click", function () {
-    sortAndShowCategories(ORDER_DESC_BY_NAME);
-  });
-
-  document.getElementById("sortByCount").addEventListener("click", function () {
-    sortAndShowCategories(ORDER_BY_PROD_COUNT);
   });
 
   document

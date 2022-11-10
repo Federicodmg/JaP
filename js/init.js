@@ -21,6 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function logout() {
   localStorage.removeItem("login");
+  localStorage.removeItem("profileData");
   window.location = "index.html";
 }
 
