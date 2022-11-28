@@ -15,6 +15,7 @@
     <link href="css/font-awesome.min.css" rel="stylesheet" />
     <link href="css/bootstrap.min.css" rel="stylesheet" />
     <link href="css/styles.css" rel="stylesheet" />
+    <link href="css/product.css" rel="stylesheet" />
   </head>
 
   <body>
@@ -32,12 +33,12 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav w-100 justify-content-between">
+          <ul class="navbar-nav w-100 nav-bar">
             <li class="nav-item">
               <a class="nav-link" href="portada.html">Inicio</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="categories.html">Categorías</a>
+              <a class="nav-link active" href="categories.html">Categorías</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="sell.html">Vender</a>
@@ -53,7 +54,7 @@
                 >
                   User
                 </button>
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton3">
+                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton3">
                   <li>
                     <a class="dropdown-item" href="cart.html">Mi carrito</a>
                   </li>
@@ -84,89 +85,86 @@
           Verás aquí todos los productos de la categoría Autos.
         </p>
       </div>
-      <div class="container">
-        <div class="row">
-          <div class="col text-end">
-            <div
-              class="btn-group btn-group-toggle mb-4"
-              data-bs-toggle="buttons"
-            >
-              <input
-                type="radio"
-                class="btn-check"
-                name="options"
-                id="sortAsc"
-              />
-              <label class="btn btn-light" for="sortAsc">
-                <i class="fas fa-sort-amount-down mr-1">$</i>
-              </label>
-              <input
-                type="radio"
-                class="btn-check"
-                name="options"
-                id="sortDesc"
-              />
-              <label class="btn btn-light" for="sortDesc">
-                <i class="fas fa-sort-amount-up mr-1">$</i>
-              </label>
-              <input
-                type="radio"
-                class="btn-check"
-                name="options"
-                id="sortByRel"
-                checked
-              />
-              <label class="btn btn-light" for="sortByRel">
-                <i class="fas fa-sort-amount-down mr-1">Rel.</i>
-              </label>
-            </div>
-          </div>
+      <div class="sm-filter-div">
+        <div class="sm-filters">
+          <span class="sm-filter-span">
+            <span class="bold-font my-2 me-2 sm-sort-label">Cantidad:</span>
+            <input
+              class="filter-input"
+              type="number"
+              placeholder="min."
+              id="rangeFilterCountMin1"
+            />
+            <input
+              class="filter-input"
+              type="number"
+              placeholder="máx."
+              id="rangeFilterCountMax1"
+            />
+            <button class="btn btn-primary filter-btn" id="rangeFilterCount" onclick="filterCount(1)">Filtrar</button>
+            <button class="btn btn-primary filter-btn" id="clearRangeFilter" onclick="clearFilter(1)">Limpiar</button>
+          </span>
+          <span class="sm-span">
+            <label for="filters-select" class="sm-sort-label my-2">Ordenar desde:</label>
+            <select name="filters" id="filters-select" onchange="selectFilter(event)">
+              <option value="AZ">Menor a mayor precio</option>
+              <option value="ZA">Mayor a menor precio</option>
+              <option value="Rel.">Más a menos vendidos</option>
+            </select>
+          </span>
+          <span class="sm-span">
+            <label for="busqueda" class="sm-sort-label my-2">O buscar:</label>
+            <input
+              class="input-search"
+              id="busqueda-sm"
+              type="search"
+              placeholder="Buscar productos"
+            />
+          </span>
         </div>
-        <div class="row">
-          <div class="col-lg-12 col-md-12 mb-1 container">
-            <div class="row container p-0 m-0">
-              <div class="col-lg-6">
+      </div>
+      <div class="container">
+        <div class="row container-row">
+          <div class="col-2 filters shadow">
+            <div>
+              <p class="bold-font">Cantidad:</p>
+              <input
+                class="filter-input me-2"
+                type="number"
+                placeholder="min."
+                id="rangeFilterCountMin2"
+              />
+              <input
+                class="filter-input me-2"
+                type="number"
+                placeholder="máx."
+                id="rangeFilterCountMax2"
+              />
+            </div>
+            <div class="button-div">
+              <button class="btn btn-primary" id="rangeFilterCount" onclick="filterCount(2)">Filtrar</button>
+              <button class="btn btn-primary" id="clearRangeFilter" onclick="clearFilter(2)">Limpiar</button>
+            </div>
+            <div>
+              <label for="filters-select">Ordenar desde:</label>
+              <select name="filters" id="filters-select" class="w-100" onchange="selectFilter(event)">
+                <option value="AZ">Menor a mayor precio</option>
+                <option value="ZA">Mayor a menor precio</option>
+                <option value="Rel.">Más a menos vendidos</option>
+              </select>
+            </div>
+            <div>
+              <span class="text-end">
                 <input
-                  class="buscador"
+                  class="input-search"
                   id="busqueda"
                   type="search"
-                  placeholder="Busque productos específicos aquí"
+                  placeholder="Buscar productos"
                 />
-              </div>
-              <div class="col">
-                <p class="font-weight-normal text-end my-2">Cant.</p>
-              </div>
-              <div class="col">
-                <input
-                  class="form-control"
-                  type="number"
-                  placeholder="min."
-                  id="rangeFilterCountMin"
-                />
-              </div>
-              <div class="col">
-                <input
-                  class="form-control"
-                  type="number"
-                  placeholder="máx."
-                  id="rangeFilterCountMax"
-                />
-              </div>
-              <div class="col-3 p-0">
-                <div class="btn-group" role="group">
-                  <button class="btn btn-light btn-block" id="rangeFilterCount">
-                    Filtrar
-                  </button>
-                  <button class="btn btn-link btn-sm" id="clearRangeFilter">
-                    Limpiar
-                  </button>
-                </div>
-              </div>
+              </span>
             </div>
           </div>
-        </div>
-        <div class="row">
-          <div class="list-group" id="cat-list-container"></div>
+          <div class="col-10 row cat-container" id="cat-list-container"></div>
         </div>
       </div>
     </main>

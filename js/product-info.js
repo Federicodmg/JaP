@@ -1,5 +1,6 @@
 let productID = +localStorage.getItem("productID");
 let commentArray = JSON.parse(localStorage.getItem("comentarios"));
+let currentLogin = localStorage.getItem("login");
 let currentInfoArray;
 let currentCommentArray = [];
 let cartObj = localStorage.getItem("cartObj");
@@ -40,12 +41,12 @@ function identifyComments() {
 }
 
 function addComment() {
-  if (!document.getElementById("textArea").value) return;
+  if (!document.getElementById("comment-input").value) return;
 
   let comentario = {
     product: +localStorage.getItem("productID"),
     score: +document.getElementById("dropdownMenu2").innerText,
-    description: document.getElementById("textArea").value,
+    description: document.getElementById("comment-input").value,
     user: localStorage.getItem("login"),
     dateTime: moment().format("YYYY-MM-DD HH:mm:ss "), //Fecha usando la libreria moment para ahorrar dolor de gónadas
   };
@@ -103,7 +104,8 @@ function createComments() {
 
     commentLoop += `
 			<div class="list-group-item">
-				<p><strong>${comment.user}</strong> - ${comment.dateTime} - ${starRating}</p>
+				<p class="m-0"><strong class="comment-user">${comment.user}</strong><span class="comment-date"> ${comment.dateTime}</span></p>
+        <p>${starRating}</p>
 				${comment.description}
 			</div>
 		`;
@@ -121,10 +123,10 @@ function createRelatedItems() {
     let item = currentInfoArray.relatedProducts[i];
 
     relatedItems += `
-			<div class="col-3" onclick="relatedProductRefresh(${item.id})">
+			<div class="col-6 related-item-col" onclick="relatedProductRefresh(${item.id})">
 				<div class="list-group-item">
 					<img src="${item.image}" alt="" style="width:100%">
-          <p>${item.name}</p>
+          <p class="related-item-name">${item.name}</p>
 				</div>
 			</div>
 		`;
@@ -157,36 +159,54 @@ function createImages() {
 
 
 function purchaseItem() {
+  let currentItemInCart;
   let currentCartObj = {};
-  //Creamos un array vacío
 
-  if (
-    cartObj && cartObj.includes(currentInfoArray.id)
-  ) {
-    danger.classList.add("show");
-    return;
-  }
-  //Si el array incluye la ID de lo que intentamos agregar
-  // o es 50924 (la default de la request) no se agrega
-
-  if (cartObj) {
-    currentCartObj = JSON.parse(cartObj);
-  }
-  //Si hay un carrito lo traemos
-
-  let producto = {
+  let product = {
     name: currentInfoArray.name,
     count: +1,
     unitCost: currentInfoArray.cost,
     currency: currentInfoArray.currency,
-    image: currentInfoArray.images[0]
+    image: currentInfoArray.images[0],
+    id: currentInfoArray.id
   };
-  //Creamos el producto con los datos
 
-  currentCartObj[currentInfoArray.id] = producto;
+  if (cartObj) {
+    currentCartObj = JSON.parse(cartObj);
+    if (currentCartObj[currentLogin]) currentItemInCart = currentCartObj[currentLogin].find(item => item.id == currentInfoArray.id);
+  }
+  //Si existe el carrito se lo parsea, y si tiene el login actual nos fijamos si existe en el carrito actual
+
+  if (
+    cartObj && currentItemInCart
+  ) {
+    danger.classList.add("show");
+    return;
+  }
+  //Si el item está en el carrito se retorna y tira alerta
+
+  if (currentCartObj[currentLogin]) {
+    currentCartObj[currentLogin].push(product);
+  } else if (!currentCartObj[currentLogin]) {
+    let array = [];
+    array.push(product);
+    currentCartObj[currentLogin] = array;
+  }
+  //Si existe ya un usuario con su array de productos, le pusheamos uno nuevo
+  //de lo contrario le creamos un array vacío primero
+
   localStorage.setItem("cartObj", JSON.stringify(currentCartObj));
   success.classList.add("show");
   //Pusheamos el producto al array, lo guardamos en localStorage y sale una alerta
+}
+
+function startCarousel() {
+  let myCarousel = document.querySelector('#carouselExampleIndicators');
+  let carousel = new bootstrap.Carousel(myCarousel, {
+    interval: 5000,
+    wrap: true
+  });
+  //Para que el carrusel ande desde el DOMContentLoaded
 }
 
 function showProductInfo() {
@@ -201,24 +221,9 @@ function showProductInfo() {
   commentLoop = createComments();
 
   htmlContentToAppend += `
-            <div class="header-prod-info mt-3">
-                <h1>${currentInfoArray.name}</h1>
-                <button class="btn btn-success" onclick="purchaseItem()">Comprar</button>
-            </div>
-            <hr>
-            <div class="row">
-              <div class="col-6 d-flex justify-content-between flex-column">
-                <strong>Precio</strong>
-                  <p>${currentInfoArray.currency} ${currentInfoArray.cost}</p>
-                <strong>Descripción</strong>
-                  <p>${currentInfoArray.description}</p>
-                <strong>Categoría</strong>
-                  <p>${currentInfoArray.category}</p>
-                <strong>Cantidad de vendidos</strong>
-                  <p>${currentInfoArray.soldCount}</p>
-              </div>
-              <div class="col-6">
-                <div id="carouselExampleIndicators" class="carousel carousel-dark slide" data-bs-ride="carousel">
+            <div class="row main-row shadow">
+              <div class="col-7 img-col">
+                <div id="carouselExampleIndicators" class="carousel carousel-dark slide">
                   <div class="carousel-indicators">
                     <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
                     <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
@@ -237,42 +242,64 @@ function showProductInfo() {
                 </button>
                 </div>
               </div>
+              <div class="col-5 d-flex flex-column info-col">
+                <div>
+                  <p class="description-name">Nombre</p>
+                  <p class="description-text">${currentInfoArray.name}</p>
+                </div>
+                <div>
+                  <p class="description-name">Precio</p>
+                  <p class="description-text">${currentInfoArray.currency} ${currentInfoArray.cost}</p>
+                </div>
+                <div>
+                  <p class="description-name">Descripción</p>
+                  <p class="description-text">${currentInfoArray.description}</p>
+                </div>
+                <div>
+                  <p class="description-name">Categoría</p>
+                  <p class="description-text">${currentInfoArray.category}</p>
+                </div>
+                <div>
+                  <p class="description-name">Cantidad de vendidos</p>
+                  <p class="description-text">${currentInfoArray.soldCount}</p>
+                </div>
+                <button class="btn btn-success" onclick="purchaseItem()">Comprar</button>
+              </div>
             </div>
-            <hr>
-						<h4 class="mt-2">Comentarios</h4>
-							${commentLoop}
-						<h4 class="mt-2">Comentar</h4>
-						<p>Tu opinión:</p>
-						<textarea id="textArea" style="width:50%; height:100px"></textarea>
-						<p class="mt-3">Tu puntuación:</p>
-						<div class="dropdown">
-							<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
-								1
-							</button>
-							<ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-								<li><button class="dropdown-item" type="button">1</button></li>
-								<li><button class="dropdown-item" type="button">2</button></li>
-								<li><button class="dropdown-item" type="button">3</button></li>
-								<li><button class="dropdown-item" type="button">4</button></li>
-								<li><button class="dropdown-item" type="button">5</button></li>
-							</ul>
-							<br>
-							<button type="button" onclick="addComment()" class="btn btn-primary mt-2">Enviar</button>
-						</div>
-            <hr>
-            <h4>Productos relacionados</h4>
-            <div class="row" style="cursor: pointer">
-              ${relatedItems}
-						</div>
-            
-
-						
+            <div class="row comment-row">
+              <div class="col-6 shadow">
+                <h4>Comentarios</h4>
+                ${commentLoop}
+              </div>
+              <div class="col-6 shadow related-products">
+                <h4 class="comment-label">Deje su comentario y opinión aquí</h4>
+                <input type="text" class="comment-input" placeholder="Me parece..." id="comment-input">
+                <div class="dropdown rating-dropdown">
+                  <button class="btn btn-secondary dropdown-toggle my-3" type="button" id="dropdownMenu2" data-bs-toggle="dropdown" aria-expanded="false">
+                    1
+                  </button>
+                  <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                    <li><button class="dropdown-item" type="button">1</button></li>
+                    <li><button class="dropdown-item" type="button">2</button></li>
+                    <li><button class="dropdown-item" type="button">3</button></li>
+                    <li><button class="dropdown-item" type="button">4</button></li>
+                    <li><button class="dropdown-item" type="button">5</button></li>
+                  </ul>
+                </div>
+                <button type="button" onclick="addComment()" class="btn btn-primary my-3">Enviar</button>
+                <h3>Productos relacionados</h3>
+                <div class="row" style="cursor: pointer">
+                  ${relatedItems}
+                </div>
+              </div>
+            </div>
 					`;
   //El html donde todos los loop se unen
 
   document.getElementById("cat-list-container").innerHTML = htmlContentToAppend;
 
   setValue();
+  startCarousel();
   //Se ejecuta luego de dibujar el HTML para darle a todos los items un evento
   //Usando el input type select me ahorraba esto pero bueno :)
 }

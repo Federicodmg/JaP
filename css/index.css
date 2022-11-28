@@ -1,0 +1,25 @@
+body {
+    background-color: var(--main-background);
+}
+
+footer {
+    background-color: white;
+}
+
+.container {
+    background-color: white;
+    padding: 1.5rem;
+    border-radius: 10px;
+}
+
+label {
+    font-weight: 400;
+}
+
+h3, p.mt-3 {
+    font-weight: bold;
+}
+
+main.form-signin {
+    padding-bottom: 3rem;
+}

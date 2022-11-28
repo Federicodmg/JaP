@@ -7,6 +7,7 @@ let minCount = undefined;
 let maxCount = undefined;
 let currentID = localStorage.getItem("catID");
 let inputBusqueda = document.getElementById("busqueda");
+let inputBusquedaSm = document.getElementById("busqueda-sm");
 let busquedaFiltrada;
 
 function sortProducts(criteria, array) {
@@ -61,26 +62,23 @@ function showProductsList() {
     let product = array[i];
     if (
       (minCount == undefined ||
-        (minCount != undefined && parseInt(product.soldCount) >= minCount)) &&
+        (minCount != undefined && parseInt(product.cost) >= minCount)) &&
       (maxCount == undefined ||
-        (maxCount != undefined && parseInt(product.soldCount) <= maxCount))
+        (maxCount != undefined && parseInt(product.cost) <= maxCount))
     ) {
       htmlContentToAppend += `
-            <div onclick="setCatID(${product.id})" class="list-group-item list-group-item-action cursor-active">
-                <div class="row">
-                    <div class="col-3">
-                        <img src="${product.image}" alt="${product.description}" class="img-thumbnail">
-                    </div>
-                    <div class="col">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h4 class="mb-1">${product.name} - ${product.currency} ${product.cost}</h4>
-                            <small class="text-muted">${product.soldCount} vendidos</small>
-                        </div>
-                        <p class="mb-1">${product.description}</p>
-                    </div>
-                </div>
+          <div onclick="setCatID(${product.id})" class="row cursor-active col-6 mb-3 shadow custom-card">
+            <div class="col-6 cat-col">
+                <img src="${product.image}" alt="${product.description}" class="card-img">
             </div>
-            `;
+            <div class="col-6 cat-col">
+                <h4 class="mb-1 mt-2">${product.name} </h4>
+                <hr>
+                <p>${product.description}</p>
+                <small>${product.currency} ${product.cost} - ${product.soldCount} vendidos</small>
+            </div>
+          </div>
+          `;
     }
   }
   document.getElementById("cat-list-container").innerHTML = htmlContentToAppend;
@@ -106,6 +104,44 @@ function sortAndShowProducts(sortCriteria, productsArray) {
   showProductsList();
 }
 
+function selectFilter(e) {
+  sortAndShowProducts(e.target.value);
+  //Filtra dependiendo del value de la opción elegida, A-Z, Z-A, etc.
+}
+
+function clearFilter(id) {
+  document.getElementById(`rangeFilterCountMin${id}`).value = "";
+  document.getElementById(`rangeFilterCountMax${id}`).value = "";
+
+  minCount = undefined;
+  maxCount = undefined;
+
+  showProductsList();
+  //Limpia los filtros, usa una ID ya que existe dos veces casi el mismo código
+  //solo que se cambian dependiendo del tamaño de pantalla
+}
+
+function filterCount(id) {
+  minCount = document.getElementById(`rangeFilterCountMin${id}`).value;
+  maxCount = document.getElementById(`rangeFilterCountMax${id}`).value;
+
+  if (minCount != undefined && minCount != "" && parseInt(minCount) >= 0) {
+    minCount = parseInt(minCount);
+  } else {
+    minCount = undefined;
+  }
+
+  if (maxCount != undefined && maxCount != "" && parseInt(maxCount) >= 0) {
+    maxCount = parseInt(maxCount);
+  } else {
+    maxCount = undefined;
+  }
+
+  showProductsList();
+  //Selecciona los valores de filtrado correctos, usa una ID ya que existe dos veces casi el mismo código
+  //solo que se cambian dependiendo del tamaño de pantalla
+}
+
 document.addEventListener("DOMContentLoaded", function (e) {
   getJSONData(`${PRODUCTS_URL}${currentID}.json`).then(function (resultObj) {
     if (resultObj.status === "ok") {
@@ -114,53 +150,6 @@ document.addEventListener("DOMContentLoaded", function (e) {
       //sortAndShowProducts(ORDER_ASC_BY_PRICE, resultObj.data);
     }
   });
-
-  document.getElementById("sortAsc").addEventListener("click", function () {
-    sortAndShowProducts(ORDER_ASC_BY_PRICE);
-  });
-
-  document.getElementById("sortDesc").addEventListener("click", function () {
-    sortAndShowProducts(ORDER_DESC_BY_PRICE);
-  });
-
-  document.getElementById("sortByRel").addEventListener("click", function () {
-    sortAndShowProducts(ORDER_BY_REL);
-  });
-
-  document
-    .getElementById("clearRangeFilter")
-    .addEventListener("click", function () {
-      document.getElementById("rangeFilterCountMin").value = "";
-      document.getElementById("rangeFilterCountMax").value = "";
-
-      minCount = undefined;
-      maxCount = undefined;
-
-      showProductsList();
-    });
-
-  document
-    .getElementById("rangeFilterCount")
-    .addEventListener("click", function () {
-      //Obtengo el mínimo y máximo de los intervalos para filtrar por cantidad
-      //de productos por categoría.
-      minCount = document.getElementById("rangeFilterCountMin").value;
-      maxCount = document.getElementById("rangeFilterCountMax").value;
-
-      if (minCount != undefined && minCount != "" && parseInt(minCount) >= 0) {
-        minCount = parseInt(minCount);
-      } else {
-        minCount = undefined;
-      }
-
-      if (maxCount != undefined && maxCount != "" && parseInt(maxCount) >= 0) {
-        maxCount = parseInt(maxCount);
-      } else {
-        maxCount = undefined;
-      }
-
-      showProductsList();
-    });
 
   inputBusqueda.addEventListener("input", (e) => {
     let busquedaActual = e.target.value.toLowerCase();
@@ -173,5 +162,20 @@ document.addEventListener("DOMContentLoaded", function (e) {
     });
 
     showProductsList();
+    //Filtra los productos dependiendo del valor del input
+  });
+
+  inputBusquedaSm.addEventListener("input", (e) => {
+    let busquedaActual = e.target.value.toLowerCase();
+
+    busquedaFiltrada = currentProductsArray.filter((producto) => {
+      return (
+        producto.name.toLowerCase().includes(busquedaActual) ||
+        producto.description.toLowerCase().includes(busquedaActual)
+      );
+    });
+
+    showProductsList();
+    //Filtra los productos dependiendo del valor del input
   });
 });

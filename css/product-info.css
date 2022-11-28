@@ -1,0 +1,162 @@
+.carousel-control-next,
+.carousel-control-prev {
+    opacity: 1;
+}
+
+.header-prod-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0;
+    padding: 0;
+}
+
+h4 {
+    font-weight: bolder;
+}
+
+.description-name {
+    font-weight: bolder;
+    font-size: 20px;
+    margin: 0px;
+}
+
+.main-row {
+    padding-top: 1.5rem;
+    background: white;
+    margin-bottom: 1rem;
+    padding: 20px;
+    border-radius: 5px;
+
+}
+
+.comment-row {
+    display: flex;
+    justify-content: space-between;
+}
+
+div.col-6.shadow {
+    width: 48%;
+    padding: 20px;
+    background: white;
+}
+
+.info-col {
+    justify-content: space-around;
+}
+
+.comment-input {
+    display: block;
+    width: 100%;
+    height: 45px;
+    border-radius: 5px;
+    border: 1px solid rgba(0, 0, 0, 0.39);
+}
+
+.comment-input[type="text"] {
+    font-weight: bold;
+    padding-left: .5rem;
+}
+
+.rating-dropdown {
+    display: inline;
+}
+
+div.list-group-item {
+    border-radius: 5px;
+    background-color: #f8f9fa;
+}
+
+.related-products {
+    height: fit-content;
+    padding: 20px;
+}
+
+.related-item-name {
+    margin: 8px 0px 0px;
+    font-weight: bolder;
+}
+
+.img-col {
+    margin-block: auto;
+}
+
+.comment-user {
+    font-size: 1.2rem;
+}
+
+h4 {
+    font-size: 1.7rem;
+}
+
+button.btn-primary {
+    width: 6rem;
+}
+
+button.dropdown-toggle {
+    width: 6rem;
+}
+
+.dropdown-toggle::after {
+    margin-left: 3.3rem;
+}
+
+@media (max-width:992px) {
+    .container {
+        max-width: 698px;
+    }
+
+    .img-col {
+        width: 100%;
+    }
+
+    .info-col {
+        width: 80%;
+        margin-inline: auto;
+        padding-top: 1.25rem;
+    }
+
+    .related-item-col {
+        width: 100%;
+    }
+
+    .related-item-col:first-child {
+        margin-bottom: 10px;
+    }
+
+    .comment-user {
+        font-size: 1.125rem;
+    }
+}
+
+@media (max-width: 768px) {
+	.container {
+		max-width: 540px;
+	}
+
+    div.col-6.shadow {
+        width: 100%;
+    }
+
+    div.col-6.shadow:first-child {
+        margin-bottom: 1rem;
+    }
+
+    main {
+        padding-inline: 2rem;
+    }
+}
+
+@media (max-width: 600px) {
+	.info-col {
+        width: 100%;
+    }
+
+    .comment-user {
+        font-size: 1rem;
+    }
+
+    .comment-date {
+        display: block;
+    }
+}

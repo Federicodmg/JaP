@@ -64,15 +64,15 @@ function showCategoriesList() {
         (maxCount != undefined && parseInt(category.productCount) <= maxCount))
     ) {
       htmlContentToAppend += `
-            <div onclick="setCatID(${category.id})" class="row cursor-active col-6 boxt mb-3 shadow custom-card">
-              <div class="col-5 img-div">
+            <div onclick="setCatID(${category.id})" class="row cursor-active col-6 mb-3 shadow custom-card">
+              <div class="col-6 cat-col">
                   <img src="${category.imgSrc}" alt="${category.description}" class="card-img">
               </div>
-              <div class="col-7 img-div">
+              <div class="col-6 cat-col">
                   <h4 class="mb-1 mt-2">${category.name}</h4>
                   <hr>
                   <p>${category.description}</p>
-                  <p>${category.productCount} artículos disponibles</p>
+                  <p class="mb-0">${category.productCount} artículos disponibles</p>
               </div>
             </div>
             `;
@@ -95,12 +95,45 @@ function sortAndShowCategories(sortCriteria, categoriesArray) {
     currentCategoriesArray
   );
 
-  //Muestro las categorías ordenadas
   showCategoriesList();
 }
 
 function selectFilter(e) {
   sortAndShowCategories(e.target.value);
+  //Filtra dependiendo del value de la opción elegida, A-Z, Z-A, etc.
+}
+
+function clearFilter(id) {
+  document.getElementById(`rangeFilterCountMin${id}`).value = "";
+  document.getElementById(`rangeFilterCountMax${id}`).value = "";
+
+  minCount = undefined;
+  maxCount = undefined;
+
+  showCategoriesList();
+  //Limpia los filtros, usa una ID ya que existe dos veces casi el mismo código
+  //solo que se cambian dependiendo del tamaño de pantalla
+}
+
+function filterCount(id) {
+  minCount = document.getElementById(`rangeFilterCountMin${id}`).value;
+  maxCount = document.getElementById(`rangeFilterCountMax${id}`).value;
+
+  if (minCount != undefined && minCount != "" && parseInt(minCount) >= 0) {
+    minCount = parseInt(minCount);
+  } else {
+    minCount = undefined;
+  }
+
+  if (maxCount != undefined && maxCount != "" && parseInt(maxCount) >= 0) {
+    maxCount = parseInt(maxCount);
+  } else {
+    maxCount = undefined;
+  }
+
+  showCategoriesList();
+  //Selecciona los valores de filtrado correctos, usa una ID ya que existe dos veces casi el mismo código
+  //solo que se cambian dependiendo del tamaño de pantalla
 }
 
 //Función que se ejecuta una vez que se haya lanzado el evento de
@@ -111,42 +144,6 @@ document.addEventListener("DOMContentLoaded", function (e) {
     if (resultObj.status === "ok") {
       currentCategoriesArray = resultObj.data;
       showCategoriesList();
-      //sortAndShowCategories(ORDER_ASC_BY_NAME, resultObj.data);
     }
   });
-
-  document
-    .getElementById("clearRangeFilter")
-    .addEventListener("click", function () {
-      document.getElementById("rangeFilterCountMin").value = "";
-      document.getElementById("rangeFilterCountMax").value = "";
-
-      minCount = undefined;
-      maxCount = undefined;
-
-      showCategoriesList();
-    });
-
-  document
-    .getElementById("rangeFilterCount")
-    .addEventListener("click", function () {
-      //Obtengo el mínimo y máximo de los intervalos para filtrar por cantidad
-      //de productos por categoría.
-      minCount = document.getElementById("rangeFilterCountMin").value;
-      maxCount = document.getElementById("rangeFilterCountMax").value;
-
-      if (minCount != undefined && minCount != "" && parseInt(minCount) >= 0) {
-        minCount = parseInt(minCount);
-      } else {
-        minCount = undefined;
-      }
-
-      if (maxCount != undefined && maxCount != "" && parseInt(maxCount) >= 0) {
-        maxCount = parseInt(maxCount);
-      } else {
-        maxCount = undefined;
-      }
-
-      showCategoriesList();
-    });
 });

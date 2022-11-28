@@ -10,6 +10,7 @@
     />
     <link href="css/bootstrap.min.css" rel="stylesheet" />
     <link href="css/styles.css" rel="stylesheet" />
+    <link href="css/my-profile.css" rel="stylesheet" />
     <style>
       .bd-placeholder-img {
         font-size: 1.125rem;
@@ -26,6 +27,12 @@
         }
       }
     </style>
+    <script>
+      if (!localStorage.getItem("login")) {
+        localStorage.setItem("redirect-profile", true);
+        window.location = "./index.html";
+      }
+    </script>
   </head>
 
   <body>
@@ -43,7 +50,7 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav w-100 justify-content-between">
+          <ul class="navbar-nav w-100 nav-bar">
             <li class="nav-item">
               <a class="nav-link" href="portada.html">Inicio</a>
             </li>
@@ -83,17 +90,13 @@
         </div>
       </div>
     </nav>
-    <main>
-      <div class="container">
-        <div class="d-flex justify-content-between align-items-center mt-3 mb-3">
-          <div>
-            <h3>Perfil</h3>
-          </div>
-          <div>
-            <img src="./img/img_perfil.png" alt="Una imágen de perfil por defecto" height="100px" id="profile-img">
-          </div>
+    <main class="pb-5">
+      <div class="profile-container img-div">
+        <div>
+          <img src="./img/img_perfil.png" alt="Una imágen de perfil por defecto" height="150px" id="profile-img" class="shadow">
         </div>
-        <hr>
+      </div>
+      <div class="profile-container shadow">
         <form class="row needs-validation" novalidate id="form">
             <div class="col-6 mb-3">
                 <label for="first-name" class="form-label">Primer nombre*</label>
@@ -113,18 +116,17 @@
             </div>
             <div class="col-6 mb-3">
                 <label for="email" class="form-label">E-mail*</label>
-                <input type="text" class="form-control" id="email" required>
+                <input type="email" class="form-control" id="email" required>
             </div>
             <div class="col-6 mb-3">
                 <label for="profile-picture" class="form-label">Imágen de perfil</label>
                 <input type="file" class="form-control" accept="image/*" id="image">
             </div>
-            <div class="col-6 mb-1">
-                <label for="contact-phone" class="form-label">Teléfono de contacto*</label>
+            <div class="col-6 mb-3">
+                <label for="contact-phone" class="form-label">Teléfono de contacto</label>
                 <input type="number" class="form-control" id="contact-phone">
             </div>
         </form>
-        <hr>
         <div class="col-6">
           <button type="submit" class="btn btn-primary mt-1" form="form">Guardar cambios</button>
         </div>
@@ -145,6 +147,23 @@
         </p>
       </div>
     </footer>
+
+    <div
+      class="alert alert-danger alert-dismissible fade alert-product"
+      role="alert"
+      id="alert-danger"
+      aria-hidden="true"
+    >
+      <p>Hubo un error al guardar sus datos, asegurese de llenar todos los campos obligatorios.</p>
+      <button
+        type="button"
+        class="btn-close"
+        aria-label="Close"
+        id="btn-danger"
+        data-bs-dismiss="alert"
+      ></button>
+    </div>
+
     <script src="js/bootstrap.bundle.min.js"></script>
     <script src="js/init.js"></script>
     <script src="js/my-profile.js"></script>

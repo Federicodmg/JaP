@@ -12,17 +12,40 @@ let container = document.getElementById("container"),
     totalPriceText,
     subTotalPriceText,
     subTotalPriceUSD = 0,
-    deliveryCostUSD = 0;
+    deliveryCostUSD = 0,
+    user = localStorage.getItem("login");
+
 
 const dollar = 41;
 
 document.addEventListener("DOMContentLoaded", () => {
+    selectUser();
     showShoppingCart();
 });
 
+function selectUser() {
+    if (!storageCart) return;
+
+    let cart = {};
+    for (let item in storageCart[user]) {
+        cart[item] = storageCart[user][item];
+    }
+    storageCart = cart;
+    //Pusheamos cada objeto del carrito del usuario al storageCart
+}
+
+function createPurchasesArray() {
+    let array = [];
+    for (purchase in storageCart) {
+        storageCart[purchase].id = purchase;
+        array.push(storageCart[purchase]);
+    }
+    return array;
+    //Esto era más que nada para enviar al backend
+}
 
 function addFormValidation() {
-    form.addEventListener('submit', function (event) {
+    form.addEventListener('formdata', function (event) {
         if (!form.checkValidity()) {
             showError();
             event.preventDefault();
@@ -31,7 +54,12 @@ function addFormValidation() {
 
         if (form.checkValidity()) {
             event.preventDefault();
+            createPurchasesArray();
+            const formData = event.formData;
+            formData.append("user", user);
+            formData.append("purchases", JSON.stringify(createPurchasesArray()));
             success.classList.add("show");
+            //Appendeamos al formData el usuario y sus compras
         }
 
         form.classList.add('was-validated');
@@ -50,12 +78,14 @@ function showError() {
 function toggleRadio(e) {
     showError();
     if (e.target.id == "tarjeta-radio") {
+        transferenciaRadio.checked = false;
         cuentaInput.setAttribute("disabled", "");
         transferenciaInputs.forEach(input => {
             input.removeAttribute("disabled");
         });
         paymentSpan.innerHTML = "Tarjeta de crédito";
     } else if (e.target.id == "transferencia-radio") {
+        tarjetaRadio.checked = false;
         cuentaInput.removeAttribute("disabled");
         transferenciaInputs.forEach(input => {
             input.setAttribute("disabled", "");
@@ -66,7 +96,7 @@ function toggleRadio(e) {
 }
 
 function totalPriceCalc() {
-    totalPriceText.innerHTML = `${(deliveryCostUSD + subTotalPriceUSD).toFixed(2)} USD`;
+    totalPriceText.innerHTML = `Precio total: ${(deliveryCostUSD + subTotalPriceUSD).toFixed(2)} USD`;
     //Precio total
 }
 
@@ -74,7 +104,8 @@ function deliveryCost(percentage = 15) {
     if (!storageCart) return;
 
     deliveryCostUSD = Number(((percentage / 100) * subTotalPriceUSD).toFixed(2));
-    deliveryText.innerHTML = `${deliveryCostUSD} USD`;
+    deliveryText.innerHTML = `Costo de envío: ${deliveryCostUSD} USD`;
+    totalPriceCalc();
     //Costo de delivery
 }
 
@@ -94,7 +125,7 @@ function subtotalPriceCalc() {
     subTotalPriceUSD = Number(subTotalPriceUSD.toFixed(2));
 
     if (subTotalPriceText) {
-        subTotalPriceText.innerHTML = `${subTotalPriceUSD} USD`;
+        subTotalPriceText.innerHTML = `Subtotal: ${subTotalPriceUSD} USD`;
     } //Si ya existe un subtotal, permitimos actualizar su innerHTML para cuando cambiemos el total del artículo
 
     //Calculamos el subtotal a partir de los articulos del carrito
@@ -120,6 +151,7 @@ function changeArticleTotal(event, id, cost) {
 
     document.getElementById(id).innerHTML = `${value * cost}`;
     storageCart[id].count = value;
+    localStorage.setItem("cartObj", JSON.stringify(storageCart));
     subtotalPriceCalc();
     deliveryCost();
     totalPriceCalc();
@@ -136,24 +168,26 @@ function renderTableRows() {
         const article = storageCart[productId];
         tablehtml += `
             <tr>
-                <td scope="row" class="text-center img-td">
+                <td scope="row" class="text-center">
                     <img src="${article.image}" alt="Imágen de un ${article.name}" class="img-table">
                 </td>
-                <td class="align-items info-td">
+                <td class="align-items">
                     ${article.name}
                 </td>
-                <td class="align-items info-td">
-                    ${article.currency} ${article.unitCost}
+                <td class="align-items">
+                    <span class="hidden-span">Costo </span> ${article.currency} ${article.unitCost}
                 </td>
-                <td class="align-items info-td">
+                <td class="align-items">
+                    <span class="hidden-span">Cantidad </span>
                     <input type="number" min="1" oninput="changeArticleTotal(event, ${productId}, ${article.unitCost})" value="${article.count}" class="input-article">
                 </td>
-                <td class="align-items info-td">
+                <td class="align-items">
+                    <span class="hidden-span">Subtotal </span>
                     <strong class="total-value">${article.currency} 
                         <span id="${productId}">${article.unitCost * article.count}</span>
                     </strong>
                 </td>
-                <td class="align-items btn-td">
+                <td class="align-items">
                     <button class="btn btn-danger" onclick="deleteItem(${productId})">Remover</button>
                 </td>
             </tr>
@@ -196,89 +230,81 @@ function showShoppingCart() {
     let htmlContentToAppend = "";
 
     htmlContentToAppend = `
-        <h3>Artículos a comprar</h3>
-        <table class="table table-hover table-sm">
-          <thead>
-            <tr>
-              <th class="text-center" scope="col"></th>
-              <th class="text-center" scope="col">Nombre</th>
-              <th class="text-center" scope="col">Costo</th>
-              <th class="text-center" scope="col">Cantidad</th>
-              <th class="text-center" scope="col">Subtotal</th>
-              <th class="text-center" scope="col"></th>
-            </tr>
-          </thead>
-          <tbody>
-            ${renderTableRows()}
-          </tbody>
-        </table>
-        <hr>
-        <h3>Tipo de envío</h3>
-        ${renderRadio()}
-        <h3>Dirección de envío</h3>
-        <form id="formulario" class="row mb-3 needs-validation" novalidate>
-            <div class="mb-3 col-6">
-                <label for="calle" class="form-label">Calle</label>
-                <input type="text" class="form-control" id="calle" required>
-                <div class="invalid-feedback">
-                Ingresa una calle.
-                </div>
+        <div class="row main-row">
+            <div class="col-9 shadow">
+                <table class="table table-hover table-sm">
+                    <thead>
+                    <tr class="info-tr">
+                        <th class="text-center" scope="col"></th>
+                        <th class="text-center" scope="col">Nombre</th>
+                        <th class="text-center" scope="col">Costo</th>
+                        <th class="text-center" scope="col">Cantidad</th>
+                        <th class="text-center" scope="col">Subtotal</th>
+                        <th class="text-center" scope="col"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    ${renderTableRows()}
+                    </tbody>
+                </table>
             </div>
-            <div class="mb-3 col-6">
-                <label for="número" class="form-label">Número</label>
-                <input type="number" class="form-control" id="número" required>
-                <div class="invalid-feedback">
-                Ingresa un número.
+            <div class="col-3 shadow">
+                <h3>Tipo de envío</h3>
+                ${renderRadio()}
+                <hr>
+                <h3>Dirección de envío</h3>
+                <form id="formulario" class="row mb-2 needs-validation" novalidate method="POST" action="http://localhost:3000/user_cart" >
+                    <div class="mb-2 col-6">
+                        <label for="calle" class="form-label">Calle</label>
+                        <input type="text" class="form-control" id="calle" required name="street">
+                        <div class="invalid-feedback">
+                        Ingresa una calle.
+                        </div>
+                    </div>
+                    <div class="mb-2 col-6">
+                        <label for="número" class="form-label">Número</label>
+                        <input type="number" class="form-control" id="número" required name="street-number">
+                        <div class="invalid-feedback">
+                        Ingresa un número.
+                        </div>
+                    </div>
+                    <div class="mb-2 col-6">
+                        <label for="esquina" class="form-label">Esquina</label>
+                        <input type="text" class="form-control" id="esquina" required name="corner">
+                        <div class="invalid-feedback">
+                        Ingresa una esquina.
+                        </div>
+                    </div>
+                </form>
+                <hr>
+                <h3>Costos</h3>
+                <div>
+                    <div class="">
+                        <span class="cost-text" id="subtotal-price-text">Subtotal: ${subTotalPriceUSD} USD</span>
+                        <p>Costo unitario del producto por cantidad</p>
+                    </div>
+                    <div class="">
+                        <span class="cost-text" id="delivery-text">Costo de envío: ${deliveryCostUSD} USD</span>
+                        <p class="cost-p" id="delivery-text"></p>
+                        <p>Según el tipo de envío</p>
+                    </div>
+                    <div class="">
+                        <span class="cost-text" id="total-price-text">Precio total: ${(subTotalPriceUSD + deliveryCostUSD)} USD</span>
+                    </div>
                 </div>
-            </div>
-            <div class="mb-3 col-6">
-                <label for="esquina" class="form-label">Esquina</label>
-                <input type="text" class="form-control" id="esquina" required>
-                <div class="invalid-feedback">
-                Ingresa una esquina.
+                <hr>
+                <div> 
+                    <h3>Forma de pago</h3>
+                    <span id="payment-span">No ha seleccionado</span>
+                    <button type="button" class="btn btn-link ps-0" data-bs-toggle="modal"
+                    data-bs-target="#exampleModal">Seleccionar</button>
+                    <span class="invalid-feedback mb-3" id="invalid-payment">
+                        Debe seleccionar una forma de pago
+                    </span>
                 </div>
-            </div>
-        </form>
-        <hr>
-        <h3>Costos</h3>
-        <div class="container">
-            <div class="row list-group-item">
-                <div class="col-6 d-flex w-100 justify-content-between">
-                    <p class="text-decoration-underline">Subtotal</p>
-                    <p class="text-end" id="subtotal-price-text">${subTotalPriceUSD} USD</p>
-                </div>
-                <div class="col-6">
-                    <p>Costo unitario del producto por cantidad</p>
-                </div>
-            </div>
-            <div class="row list-group-item">
-                <div class="col-6 d-flex w-100 justify-content-between">
-                    <p class="text-decoration-underline">Costo de envío</p>
-                    <p class="text-end" id="delivery-text">${deliveryCostUSD} USD</p>
-                </div>
-                <div class="col-6">
-                    <p>Según el tipo de envío</p>
-                </div>
-            </div>
-            <div class="row list-group-item">
-                <div class="col d-flex w-100 justify-content-between">
-                    <p class="text-decoration-underline">Total (USD)</p>
-                    <p class="text-end" id="total-price-text">${(subTotalPriceUSD + deliveryCostUSD)} USD</p>
-                </div>
+                <button form="formulario" type="submit" class="btn btn-primary w-100">Finalizar compra</button>
             </div>
         </div>
-        <hr>
-        <div> 
-            <h3>Forma de pago</h3>
-            <span id="payment-span">No ha seleccionado</span>
-            <button type="button" class="btn btn-link ps-0" data-bs-toggle="modal"
-            data-bs-target="#exampleModal">Seleccionar</button>
-            <span class="invalid-feedback mb-3" id="invalid-payment">
-                Debe seleccionar una forma de pago
-            </span>
-        </div>
-        <button form="formulario" type="submit" class="btn btn-primary w-100">Finalizar compra</button>
-
     `;
     container.innerHTML = htmlContentToAppend;
     //Combinamos todo el HTML y lo ponemos en el container

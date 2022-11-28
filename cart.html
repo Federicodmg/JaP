@@ -11,14 +11,15 @@
     <link href="css/bootstrap.min.css" rel="stylesheet" />
     <link href="css/font-awesome.min.css" rel="stylesheet" />
     <link href="css/styles.css" rel="stylesheet" />
+    <link href="css/cart.css" rel="stylesheet" />
     <script>
       if (!localStorage.getItem("login")) {
-        localStorage.setItem("redirect", true);
+        localStorage.setItem("redirect-cart", true);
         window.location = "./index.html";
       }
     </script>
   </head>
-
+  
   <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark p-1">
       <div class="container">
@@ -34,7 +35,7 @@
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav w-100 justify-content-between">
+          <ul class="navbar-nav w-100 nav-bar">
             <li class="nav-item">
               <a class="nav-link" href="portada.html">Inicio</a>
             </li>
@@ -75,14 +76,9 @@
       </div>
     </nav>
   </div>
-
     <main class="pb-5">
-      <div class="text-center p-4">
-        <h2>Carrito de compras</h2>
-      </div>
-      <div class="container w-50" id="container"></div>
+      <div class="container" id="container"></div>
     </main>
-
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
@@ -92,7 +88,7 @@
           </div>
           <div class="modal-body">
             <div class="form-check">
-              <input class="form-check-input" type="radio" name="modo-de-pago" id="tarjeta-radio" onclick="toggleRadio(event)" required form="formulario">
+              <input class="form-check-input" type="radio" id="tarjeta-radio" onclick="toggleRadio(event)" required form="formulario">
               <label class="form-check-label" for="tarjeta-radio">
                 Tarjeta de crédito
               </label>
@@ -101,19 +97,19 @@
             <div class="row mb-3 tarjeta-inputs">
               <div class="mb-3 col-6">
                   <label for="num-tarjeta" class="form-label">Número de tarjeta</label>
-                  <input type="number" class="form-control" id="num-tarjeta" required form="formulario">
+                  <input type="number" class="form-control" id="num-tarjeta" required form="formulario" name="card-number">
               </div>
               <div class="mb-3 col-6">
                   <label for="num-seguridad" class="form-label">Código de seguridad.</label>
-                  <input type="number" class="form-control" id="num-seguridad" required form="formulario">
+                  <input type="number" class="form-control" id="num-seguridad" required form="formulario" name="security-code">
               </div>
               <div class="mb-3 col-6">
                   <label for="vencimiento" class="form-label">Vencimiento (MM/AA)</label>
-                  <input type="text" class="form-control" id="vencimiento" required form="formulario">
+                  <input type="text" class="form-control" id="vencimiento" required form="formulario" name="expiration-date">
               </div>
             </div>
             <div class="form-check">
-              <input class="form-check-input" type="radio" name="modo-de-pago" id="transferencia-radio" onclick="toggleRadio(event)" required form="formulario">
+              <input class="form-check-input" type="radio" id="transferencia-radio" onclick="toggleRadio(event)" required form="formulario">
               <label class="form-check-label" for="transferencia-radio">
                 Transferencia bancaria
               </label>
@@ -122,7 +118,7 @@
             <div class="row cuenta-input">
               <div class="mb-3 col-6">
                 <label for="num-cuenta" class="form-label">Número de cuenta</label>
-                <input type="number" class="form-control" id="num-cuenta" required form="formulario">
+                <input type="number" class="form-control" id="num-cuenta" required form="formulario" name="account-number">
                 <div class="invalid-feedback">
                   Please provide a valid city.
                 </div>
